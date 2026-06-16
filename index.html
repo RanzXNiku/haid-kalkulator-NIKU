@@ -321,7 +321,7 @@
   <header>
     <span class="moon-icon">🌸</span>
     <h1>NIKU</h1>
-    <img src=Istri.jpg alt="NIKU" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:10px auto 0;display:block;border:3px solid #F06292;box-shadow:0 4px 14px rgba(194,24,91,0.2);">
+    <img src="Istri.jpg" alt="NIKU" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:10px auto 0;display:block;border:3px solid #F06292;box-shadow:0 4px 14px rgba(194,24,91,0.2);">
     <p class="subtitle">Kalkulator Siklus Haid · Pantau siklus, ovulasi & fase tubuhmu ya nila sayangku😘</p>
   </header>
 
@@ -373,7 +373,212 @@
     <p class="tip">
       ⚠️ Kalkulator ini bersifat estimasi. Siklus dapat berubah karena stres, pola makan, atau kondisi kesehatan. Seblaknya kurangi woilah 🗿
     </p>
+  </div>
+
+  <!-- Music Player -->
+  <div class="card" id="musicCard">
+    <p class="card-title">🎵 Pemutar Musik</p>
+    <div class="player-box">
+      <div class="album-art" id="albumArt">🌸</div>
+      <div class="track-info">
+        <p class="track-title" id="trackTitle">Flower of Regrets</p>
+        <p class="track-artist" id="trackArtist">Bbibeeb</p>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <span class="time-label" id="currentTime">0:00</span>
+      <input type="range" id="seekBar" class="seek-bar" value="0" min="0" max="100" step="0.1">
+      <span class="time-label" id="durationTime">0:00</span>
+    </div>
+
+    <div class="player-controls">
+      <button class="ctrl-btn" id="loopBtn" title="Loop">🔁</button>
+      <button class="ctrl-btn play-btn" id="playBtn">▶️</button>
+      <button class="ctrl-btn" id="muteBtn" title="Mute">🔊</button>
+    </div>
+
+    <audio id="audioPlayer" loop>
+      <source src="NAMA_FILE.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 </div>
+
+<style>
+  .player-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .album-art {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--rose-light), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 14px rgba(194,24,91,0.25);
+    flex-shrink: 0;
+    animation: spin 8s linear infinite paused;
+  }
+
+  .album-art.playing { animation-play-state: running; }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .track-info { overflow: hidden; }
+
+  .track-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .track-artist {
+    font-size: 12px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .time-label {
+    font-size: 11px;
+    color: var(--text-soft);
+    font-weight: 500;
+    min-width: 32px;
+  }
+
+  .seek-bar {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--blush);
+    outline: none;
+  }
+
+  .seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--rose);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(194,24,91,0.3);
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .ctrl-btn {
+    background: var(--rose-pale);
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, background 0.2s;
+  }
+
+  .ctrl-btn:hover { transform: scale(1.08); }
+  .ctrl-btn.active { background: var(--rose-light); }
+
+  .play-btn {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--rose-mid), var(--rose));
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 6px 18px rgba(194,24,91,0.35);
+  }
+</style>
+
+<script>
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const muteBtn = document.getElementById('muteBtn');
+  const loopBtn = document.getElementById('loopBtn');
+  const seekBar = document.getElementById('seekBar');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationTimeEl = document.getElementById('durationTime');
+  const albumArt = document.getElementById('albumArt');
+
+  function formatTime(sec) {
+    if (isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '⏸️';
+      albumArt.classList.add('playing');
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶️';
+      albumArt.classList.remove('playing');
+    }
+  });
+
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+  });
+
+  loopBtn.addEventListener('click', () => {
+    audio.loop = !audio.loop;
+    loopBtn.classList.toggle('active', audio.loop);
+  });
+  loopBtn.classList.add('active');
+
+  audio.addEventListener('loadedmetadata', () => {
+    seekBar.max = audio.duration;
+    durationTimeEl.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    seekBar.value = audio.currentTime;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
+
+  seekBar.addEventListener('input', () => {
+    audio.currentTime = seekBar.value;
+  });
+
+  audio.addEventListener('ended', () => {
+    if (!audio.loop) {
+      playBtn.textContent = '▶️';
+      albumArt.classList.remove('playing');
+    }
+  });
+</script>
 
 <script>
   // Set default to today and auto-calculate
