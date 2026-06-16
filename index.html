@@ -314,97 +314,7 @@
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
-</style>
-</head>
-<body>
-<div class="container">
-  <header>
-    <span class="moon-icon">🌸</span>
-    <h1>NIKU</h1>
-    <img src="Istri.jpg" alt="NIKU" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:10px auto 0;display:block;border:3px solid #F06292;box-shadow:0 4px 14px rgba(194,24,91,0.2);">
-    <p class="subtitle">Kalkulator Siklus Haid · Pantau siklus, ovulasi & fase tubuhmu ya nila sayangku😘</p>
-  </header>
 
-  <!-- Input -->
-  <div class="card">
-    <p class="card-title">📅 Informasi Siklus</p>
-
-    <div class="input-group">
-      <label>Hari pertama haid terakhir (HPHT)</label>
-      <input type="date" id="lastPeriod" />
-    </div>
-
-    <div class="slider-group">
-      <div class="slider-header">
-        <label style="margin:0">Lama siklus</label>
-        <span class="slider-value" id="cycleVal">28 hari</span>
-      </div>
-      <input type="range" id="cycleLen" min="21" max="35" value="28"
-        oninput="document.getElementById('cycleVal').textContent = this.value + ' hari'">
-    </div>
-
-    <div class="slider-group">
-      <div class="slider-header">
-        <label style="margin:0">Lama haid</label>
-        <span class="slider-value" id="periodVal">5 hari</span>
-      </div>
-      <input type="range" id="periodLen" min="2" max="8" value="5"
-        oninput="document.getElementById('periodVal').textContent = this.value + ' hari'">
-    </div>
-
-    <button class="btn" onclick="calculate()">✨ Hitung Sekarang</button>
-  </div>
-
-  <!-- Result -->
-  <div id="result" class="result-fade">
-
-    <div id="statusBanner" class="status-banner"></div>
-
-    <div class="card">
-      <p class="card-title">🌊 Fase Siklus Ini</p>
-      <div class="phase-grid" id="phaseGrid"></div>
-    </div>
-
-    <div class="card">
-      <p class="card-title">📆 Prediksi 3 Siklus ke Depan</p>
-      <div class="next-cycles" id="nextCycles"></div>
-    </div>
-
-    <p class="tip">
-      ⚠️ Kalkulator ini bersifat estimasi. Siklus dapat berubah karena stres, pola makan, atau kondisi kesehatan. Seblaknya kurangi woilah 🗿
-    </p>
-  </div>
-
-  <!-- Music Player -->
-  <div class="card" id="musicCard">
-    <p class="card-title">🎵 Pemutar Musik</p>
-    <div class="player-box">
-      <div class="album-art" id="albumArt">🌸</div>
-      <div class="track-info">
-        <p class="track-title" id="trackTitle">Flower of Regrets</p>
-        <p class="track-artist" id="trackArtist">Bbibeeb</p>
-      </div>
-    </div>
-
-    <div class="progress-wrap">
-      <span class="time-label" id="currentTime">0:00</span>
-      <input type="range" id="seekBar" class="seek-bar" value="0" min="0" max="100" step="0.1">
-      <span class="time-label" id="durationTime">0:00</span>
-    </div>
-
-    <div class="player-controls">
-      <button class="ctrl-btn" id="loopBtn" title="Loop">🔁</button>
-      <button class="ctrl-btn play-btn" id="playBtn">▶️</button>
-      <button class="ctrl-btn" id="muteBtn" title="Mute">🔊</button>
-    </div>
-
-    <audio control>
-      <source src="Sedih.mp3" type="audio/mpeg">
-    </audio>
-  </div>
-</div>
-
-<style>
   .player-box {
     display: flex;
     align-items: center;
@@ -517,68 +427,94 @@
     box-shadow: 0 6px 18px rgba(194,24,91,0.35);
   }
 </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="moon-icon">🌸</span>
+    <h1>NIKU</h1>
+    <img src="Istri.jpg" alt="NIKU" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin:10px auto 0;display:block;border:3px solid #F06292;box-shadow:0 4px 14px rgba(194,24,91,0.2);">
+    <p class="subtitle">Kalkulator Siklus Haid · Pantau siklus, ovulasi & fase tubuhmu ya nila sayangku😘</p>
+  </header>
 
-<script>
-  const audio = document.getElementById('audioPlayer');
-  const playBtn = document.getElementById('playBtn');
-  const muteBtn = document.getElementById('muteBtn');
-  const loopBtn = document.getElementById('loopBtn');
-  const seekBar = document.getElementById('seekBar');
-  const currentTimeEl = document.getElementById('currentTime');
-  const durationTimeEl = document.getElementById('durationTime');
-  const albumArt = document.getElementById('albumArt');
+  <!-- Input -->
+  <div class="card">
+    <p class="card-title">📅 Informasi Siklus</p>
 
-  function formatTime(sec) {
-    if (isNaN(sec)) return '0:00';
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
-  }
+    <div class="input-group">
+      <label>Hari pertama haid terakhir (HPHT)</label>
+      <input type="date" id="lastPeriod" />
+    </div>
 
-  playBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-      playBtn.textContent = '⏸️';
-      albumArt.classList.add('playing');
-    } else {
-      audio.pause();
-      playBtn.textContent = '▶️';
-      albumArt.classList.remove('playing');
-    }
-  });
+    <div class="slider-group">
+      <div class="slider-header">
+        <label style="margin:0">Lama siklus</label>
+        <span class="slider-value" id="cycleVal">28 hari</span>
+      </div>
+      <input type="range" id="cycleLen" min="21" max="35" value="28"
+        oninput="document.getElementById('cycleVal').textContent = this.value + ' hari'">
+    </div>
 
-  muteBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
-  });
+    <div class="slider-group">
+      <div class="slider-header">
+        <label style="margin:0">Lama haid</label>
+        <span class="slider-value" id="periodVal">5 hari</span>
+      </div>
+      <input type="range" id="periodLen" min="2" max="8" value="5"
+        oninput="document.getElementById('periodVal').textContent = this.value + ' hari'">
+    </div>
 
-  loopBtn.addEventListener('click', () => {
-    audio.loop = !audio.loop;
-    loopBtn.classList.toggle('active', audio.loop);
-  });
-  loopBtn.classList.add('active');
+    <button class="btn" onclick="calculate()">✨ Hitung Sekarang</button>
+  </div>
 
-  audio.addEventListener('loadedmetadata', () => {
-    seekBar.max = audio.duration;
-    durationTimeEl.textContent = formatTime(audio.duration);
-  });
+  <!-- Result -->
+  <div id="result" class="result-fade">
 
-  audio.addEventListener('timeupdate', () => {
-    seekBar.value = audio.currentTime;
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-  });
+    <div id="statusBanner" class="status-banner"></div>
 
-  seekBar.addEventListener('input', () => {
-    audio.currentTime = seekBar.value;
-  });
+    <div class="card">
+      <p class="card-title">🌊 Fase Siklus Ini</p>
+      <div class="phase-grid" id="phaseGrid"></div>
+    </div>
 
-  audio.addEventListener('ended', () => {
-    if (!audio.loop) {
-      playBtn.textContent = '▶️';
-      albumArt.classList.remove('playing');
-    }
-  });
-</script>
+    <div class="card">
+      <p class="card-title">📆 Prediksi 3 Siklus ke Depan</p>
+      <div class="next-cycles" id="nextCycles"></div>
+    </div>
+
+    <p class="tip">
+      ⚠️ Kalkulator ini bersifat estimasi. Siklus dapat berubah karena stres, pola makan, atau kondisi kesehatan. Seblaknya kurangi woilah 🗿
+    </p>
+  </div>
+
+  <!-- Music Player -->
+  <div class="card" id="musicCard">
+    <p class="card-title">🎵 Pemutar Musik</p>
+    <div class="player-box">
+      <div class="album-art" id="albumArt">🌸</div>
+      <div class="track-info">
+        <p class="track-title" id="trackTitle">Flower of Regrets</p>
+        <p class="track-artist" id="trackArtist">Bbibeeb</p>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <span class="time-label" id="currentTime">0:00</span>
+      <input type="range" id="seekBar" class="seek-bar" value="0" min="0" max="100" step="0.1">
+      <span class="time-label" id="durationTime">0:00</span>
+    </div>
+
+    <div class="player-controls">
+      <button class="ctrl-btn" id="loopBtn" title="Loop">🔁</button>
+      <button class="ctrl-btn play-btn" id="playBtn">▶️</button>
+      <button class="ctrl-btn" id="muteBtn" title="Mute">🔊</button>
+    </div>
+
+    <audio id="audioPlayer" loop>
+      <source src="Sedih.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</div>
 
 <script>
   // Set default to today and auto-calculate
@@ -722,6 +658,65 @@
     resultEl.classList.add('result-fade');
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-</script>
-</body>
-</html>
+
+  // Music player logic
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const muteBtn = document.getElementById('muteBtn');
+  const loopBtn = document.getElementById('loopBtn');
+  const seekBar = document.getElementById('seekBar');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationTimeEl = document.getElementById('durationTime');
+  const albumArt = document.getElementById('albumArt');
+
+  function formatTime(sec) {
+    if (isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '⏸️';
+      albumArt.classList.add('playing');
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶️';
+      albumArt.classList.remove('playing');
+    }
+  });
+
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+  });
+
+  loopBtn.addEventListener('click', () => {
+    audio.loop = !audio.loop;
+    loopBtn.classList.toggle('active', audio.loop);
+  });
+  loopBtn.classList.add('active');
+
+  audio.addEventListener('loadedmetadata', () => {
+    seekBar.max = audio.duration;
+    durationTimeEl.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    seekBar.value = audio.currentTime;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  });
+
+  seekBar.addEventListener('input', () => {
+    audio.currentTime = seekBar.value;
+  });
+
+  audio.addEventListener('ended', () => {
+    if (!audio.loop) {
+      playBtn.textContent = '▶️';
+      albumArt.classList.remove('playing');
+    }
+  });
+</s
